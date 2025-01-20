@@ -6,3 +6,6 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/select', function (){
+    return view('select');
+});

@@ -5,7 +5,7 @@
 
     <x-interactive></x-interactive>
 
-<x-start></x-start>
+    <x-start></x-start>
 
 
-{{-- @include('layouts.footer') --}}
+@include('layouts.footer')
