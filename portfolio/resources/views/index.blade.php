@@ -1,7 +1,11 @@
 @include('layouts.header')
-@include('components.navbar')
-@include('components.carousel')
 
 
+    <x-tittle></x-tittle>
 
-@include('layouts.footer')
+    <x-interactive></x-interactive>
+
+<x-start></x-start>
+
+
+{{-- @include('layouts.footer') --}}
