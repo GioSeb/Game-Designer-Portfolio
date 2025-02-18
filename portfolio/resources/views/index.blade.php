@@ -1,4 +1,5 @@
 @include('layouts.header')
+<body style="background-image: url('{{ asset('/img/background.jpg') }}'); background-size: cover;">
 
 
     <x-tittle></x-tittle>

@@ -2,6 +2,8 @@
     margin-top: 35px;
 }
 
-body {
-    background-image: url("../img/background.jpg");
+html, body {
+    height: 100%; /* Ensures full height */
+    margin: 0; /* Removes default margin */
+    padding: 0; /* Removes default padding */
 }
