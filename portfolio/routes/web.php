@@ -13,3 +13,7 @@ Route::get('/select', function (){
 Route::get('/projects', function(){
     return view('projects');
 });
+
+Route::get('/knowledge', function(){
+    return view('knowledge');
+});
