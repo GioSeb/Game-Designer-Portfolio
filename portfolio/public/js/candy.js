@@ -1,6 +1,6 @@
 //credits to https://www.youtube.com/watch?v=8yIKZQMGi0A&ab_channel=KennyYipCoding
 
-var candies = ["Blue", "Orange", "Green", "Yellow", "Red", "Purple"];
+var candies = ["c1", "c2", "blender", "unity", "unreal", "godot"];
 var board = [];
 var rows = 9;
 var columns = 9;
@@ -31,7 +31,7 @@ function startGame(params) {
             // <img id="r-c" src="../../img/random.png">
             let tile = document.createElement("img");
             tile.id = r.toString() + "-" + c.toString();
-            tile.src = "../../img/" +randomCandy() + ".png";
+            tile.src = "../../img/candy/" +randomCandy() + ".png";
 
             //Drag functionality
             tile.addEventListener("dragstart", dragStart); //click on a candy
@@ -189,7 +189,7 @@ function slideCandy(params) {
         }
 
         for (let r = ind; r >= 0; r--) {
-            board[r][c].src = "../img/blank.png";
+            board[r][c].src = "../img/candy/blank.png";
         }
     }
 }
@@ -197,7 +197,7 @@ function slideCandy(params) {
 function generateCandy(params) {
     for (let c = 0; c < columns; c++) {
         if (board[0][c].src.includes('blank')){
-            board[0][c].src = "../img/" + randomCandy() + ".png";
+            board[0][c].src = "../img/candy/" + randomCandy() + ".png";
         }
     }
 }

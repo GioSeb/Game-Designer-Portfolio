@@ -3,7 +3,7 @@
     <script src="{{ asset('js/candy.js') }}"></script>
 
     <div class="flex justify-center mt-4">
-    <img src="{{ asset("img/score.png")}}" alt="score" class="w-10 h-10"><span class="mr-2 text-lg font-bold" id="score">0</span>
+    <img src="{{ asset("img/score.png")}}" alt="score" class="w-100 h-100"><span class="mr-2 text-lg font-bold" id="score">0</span> {{-- TO DO increase text size --}}
     </div>
     <div id="board"></div>
 
