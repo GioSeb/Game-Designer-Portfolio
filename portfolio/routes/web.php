@@ -17,3 +17,7 @@ Route::get('/projects', function(){
 Route::get('/knowledge', function(){
     return view('knowledge');
 });
+
+Route::get('/titles', function(){
+    return view('titles');
+});
