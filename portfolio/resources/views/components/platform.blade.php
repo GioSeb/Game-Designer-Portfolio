@@ -1,4 +1,4 @@
-<div class="absolute m-0" style="
+<div class="absolute m-0 platform" style="
 width: {{$width}}rem;
 height: {{$height}}px;
 left: {{$left}}rem;

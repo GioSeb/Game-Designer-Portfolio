@@ -1,13 +1,9 @@
 @include('layouts.header')
 
 <body style="height: 3400px">
-    <script src="{{ asset('js/platform.js') }}"></script>
-    <script src="{{ asset('js/sprite.js')}}"></script>
     <div class="relative w-full h-screen bg-gray-200 overflow-hidden" style="height: 3400px">
         <!-- Sprite -->
-        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2">
-            <img src="{{ asset('img/platform/sprite.png') }}" alt="sprite" style="width: 50px; height: 150px;">
-        </div>
+            <img src="{{ asset('img/platform/sprite.png') }}" alt="sprite" class="absolute" id="sprite" style="width: 50px; height: 150px;">
 
         <!-- Platforms -->
         <div class="">
@@ -20,6 +16,15 @@
             <x-platform :left="40" :bottom="30" :width="35" />
         </div>
     </div>
+
+    <script src="{{ asset('js/platform.js') }}"></script>
+    <script src="{{ asset('js/sprite.js')}}"></script>
+    <script>document.addEventListener('keydown', (e) => {
+        console.log('Key pressed:', e.key);
+        // Rest of your code
+    });
+        console.log(spriteLeft,spriteBottom)
+    </script>
 </body>
 
 @include('layouts.footer')

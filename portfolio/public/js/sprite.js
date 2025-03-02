@@ -1,70 +1,74 @@
-let x = 0;
-let y = 0;
+// Get the sprite element
+const sprite = document.getElementById('sprite');
+const platforms = document.querySelectorAll('.platform');
 
-function sprite() {
-    return {
-      x: 50, // Initial X position
-      y: 300, // Initial Y position
-      velocityY: 0,
-      gravity: 1,
-      isJumping: false,
-      platforms: [
-        { id: 1, x: 50, y: 400, width: 100, height: 20 },
-        { id: 2, x: 200, y: 300, width: 100, height: 20 },
-        { id: 3, x: 350, y: 200, width: 100, height: 20 },
-      ],
+// Initial sprite position
+let spriteBottom = document.body.offsetHeight - 150; // Use document body height
+let spriteLeft = window.innerWidth / 2 - 25; // Centered horizontally
 
-      init() {
-        this.$nextTick(() => this.applyGravity());
-      },
+// Movement variables
+let velocityY = 0; // Vertical velocity (for jumping)
+let gravity = 0.5; // Gravity acceleration
+let jumpVelocity = -10; // Initial upward velocity when jumping
 
-      applyGravity() {
-        setInterval(() => {
-          if (!this.isJumping) {
-            this.y += this.velocityY;
-            this.velocityY += this.gravity;
+// Function to check collision between two rectangles
+function isColliding(rect1, rect2) {
+    return (
+        rect1.left < rect2.right &&
+        rect1.right > rect2.left &&
+        rect1.top < rect2.bottom &&
+        rect1.bottom > rect2.top
+    );
+}
 
-            // Check collision with platforms
-            this.platforms.forEach(platform => {
-              if (
-                this.y + 10 >= platform.y &&
-                this.y + 10 <= platform.y + platform.height &&
-                this.x + 10 >= platform.x &&
-                this.x <= platform.x + platform.width
-              ) {
-                this.y = platform.y - 10; // Adjust sprite to stand on the platform
-                this.velocityY = 0;
-              }
-            });
+// Function to handle collision
+function handleCollision(platformRect) {
+    console.log('Collision detected with platform!');
+    // Adjust sprite position to prevent it from falling through the platform
+    const spriteRect = sprite.getBoundingClientRect();
+    sprite.style.bottom = `${platformRect.top - spriteRect.height}px`;
+}
 
-            // Prevent sprite from falling below screen
-            if (this.y > window.innerHeight - 10) {
-              this.y = window.innerHeight - 10;
-              this.velocityY = 0;
-            }
-          }
-        }, 16); // Run every frame (~60 FPS)
-      },
+// Function to update sprite position
+function updateSpritePosition() {
+    // Apply gravity
+    velocityY += gravity;
 
-      move(event) {
-        const step = 10;
-        if (event.key === "ArrowLeft") {
-          this.x -= step;
-        } else if (event.key === "ArrowRight") {
-          this.x += step;
-        } else if (event.key === "ArrowUp" && !this.isJumping) {
-          this.isJumping = true;
-          let jumpHeight = -15; // Negative for upward movement
-          let jumpInterval = setInterval(() => {
-            this.y += jumpHeight;
-            jumpHeight += this.gravity;
+    // Update vertical position
+    spriteBottom += velocityY;
 
-            if (jumpHeight > 0) {
-              clearInterval(jumpInterval);
-              this.isJumping = false;
-            }
-          }, 16);
+    // Prevent sprite from falling off the screen
+    if (spriteBottom > window.innerHeight - 150) {
+        spriteBottom = window.innerHeight - 150;
+        velocityY = 0; // Reset velocity when hitting the ground
+    }
+
+    // Check for collisions with platforms
+    const spriteRect = sprite.getBoundingClientRect();
+    platforms.forEach(platform => {
+        const platformRect = platform.getBoundingClientRect();
+        if (isColliding(spriteRect, platformRect)) {
+            handleCollision(platformRect);
         }
-      }
-    };
-  }
+    });
+
+    // Update sprite's style
+    sprite.style.bottom = `${spriteBottom}px`;
+    sprite.style.left = `${spriteLeft}px`;
+}
+
+// Handle key presses
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+        spriteLeft -= 10; // Move left
+    } else if (e.key === 'ArrowRight') {
+        spriteLeft += 10; // Move right
+    } else if (e.key === ' ') {
+        if (velocityY === 0) { // Only jump if on the ground
+            velocityY = jumpVelocity;
+        }
+    }
+});
+
+// Update sprite position repeatedly
+setInterval(updateSpritePosition, 16); // Approximately 60 FPS
