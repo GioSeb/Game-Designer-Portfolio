@@ -1,3 +1,10 @@
-<div {{ $attributes->merge(['class' => 'absolute bg-green-500']) }}
-    :style="{ top: `${y}px`, left: `${x}px`, width: `${width}px`, height: `${height}px` }">
+<div class="absolute m-0" style="
+width: {{$width}}rem;
+height: {{$height}}px;
+left: {{$left}}rem;
+right: {{$right}}rem;
+top: {{$top}}rem;
+bottom: {{$bottom}}rem;
+background-color: black;">
+
 </div>

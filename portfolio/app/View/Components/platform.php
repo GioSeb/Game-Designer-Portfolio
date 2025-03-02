@@ -8,12 +8,21 @@ use Illuminate\View\Component;
 
 class platform extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
+
+    public $left = null;
+    public $right = null;
+    public $bottom = null;
+    public $top = null;
+    public $width;
+    public $height = 75;
+
+    public function __construct($left = null, $right = null, $top = null, $bottom = null, $width = null, $height = 75)
     {
-        //
+        $this->left = $left;
+        $this->right = $right;
+        $this->top = $top;
+        $this->bottom = $bottom;
+        $this->width = $width;
     }
 
     /**
