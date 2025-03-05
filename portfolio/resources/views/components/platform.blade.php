@@ -8,3 +8,4 @@ bottom: {{$bottom}}rem;
 background-color: black;">
 
 </div>
+{{-- TO DO add titles in the div --}}

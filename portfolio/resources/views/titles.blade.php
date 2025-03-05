@@ -3,7 +3,7 @@
 <body style="height: 3400px">
     <div class="relative w-full h-screen bg-gray-200 overflow-hidden" style="height: 3400px">
         <!-- Sprite -->
-            <img src="{{ asset('img/platform/sprite.png') }}" alt="sprite" class="absolute" id="sprite" style="width: 50px; height: 150px;">
+            <img src="{{ asset('img/platform/sprite.png') }}" alt="sprite" class="absolute" id="sprite" style="width: 50px; height: 150px;"> {{-- TO DO add sprite --}}
 
         <!-- Platforms -->
         <div class="">

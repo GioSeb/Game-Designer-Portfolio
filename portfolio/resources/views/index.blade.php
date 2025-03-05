@@ -1,4 +1,4 @@
-@include('layouts.header')
+@include('layouts.header') {{-- TO DO press any key to continue, with js --}}
 <body style="background-image: url('{{ asset('/img/background.jpg') }}'); background-size: cover;">
 
 

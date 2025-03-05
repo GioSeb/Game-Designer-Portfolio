@@ -2,11 +2,11 @@
 <div x-data="{ isOpen: false }">
     <!-- Button to open the modal -->
     <button @click="isOpen = true">
-        <div style="background-color: green;">
+        <div style="background-color: green;"> {{-- TO DO add transparent png with project --}}
             <img src="{{ asset('/img/tower2.png')}}" alt="window" style="height: 7.313rem; width: 15.5rem;">
         </div>
     </button>
-
+    {{-- TO DO finish modal --}}
     <!-- Modal backdrop and content -->
     <div
         x-show="isOpen"
