@@ -19,12 +19,6 @@
 
     <script src="{{ asset('js/platform.js') }}"></script>
     <script src="{{ asset('js/sprite.js')}}"></script>
-    <script>document.addEventListener('keydown', (e) => {
-        console.log('Key pressed:', e.key);
-        // Rest of your code
-    });
-        console.log(spriteLeft,spriteBottom)
-    </script>
 </body>
 
 @include('layouts.footer')
