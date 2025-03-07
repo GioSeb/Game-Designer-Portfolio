@@ -48,30 +48,8 @@ let velocityY = 0; // Vertical velocity (for jumping)
 let gravity = 0.5; // Gravity acceleration
 let jumpVelocity = 30; // Initial upward velocity when jumping
 
-// Handle key presses TO DO smooth the animation, allow it to move while jumping, fix collision when jumping
-let isJumping = false;
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
-        spriteLeft -= 10; // Move left
-    } else if (e.key === 'ArrowRight') {
-        spriteLeft += 10; // Move right
-    } else if (e.key === ' ') {
-        e.preventDefault(); // Prevent default scrolling behavior immediatel
-        if (!isJumping && (velocityY === 0 || Math.abs(velocityY) < 0.1)){ // Allow jump if nearly on the ground
-            velocityY = -jumpVelocity; // Note: Negative for upward movement
-            isJumping = true; // Set jump flag
-            setTimeout(() => {
-                isJumping = false; // Reset jump flag after a delay
-            }, 10); // Adjust the delay as needed
-            console.log(isJumping);
-        }
-    }
-});
-document.addEventListener('keyup', (e) => {
-    if (e.key === ' ') {
-        isJumping = false; // Reset flag when space bar is released
-    }
-});
+// TO DO smooth the animation, allow it to move while jumping, fix collision when jumping
+
 
 // Function to check collision between platform and sprite
 function isColliding(rect1, rect2) {
@@ -81,6 +59,25 @@ function isColliding(rect1, rect2) {
         rect1.top < rect2.bottom &&
         rect1.bottom > rect2.top
     );
+}
+
+// Function to check collision and adjust sprite position
+function collisionCheck() {
+    let isOnPlatform = false; // Flag to check if sprite is on a platform
+    platforms.forEach(platform => {
+        const platformBoundaries = platform.getBoundingClientRect();
+        if (isColliding(spriteBoundaries, platformBoundaries) && !isJumping) {
+            isOnPlatform = true; // Set flag if collision detected
+            // Adjust sprite position to the top of the platform
+            const spriteHeight = spriteBoundaries.height;
+            const platformTop = platformBoundaries.top;
+            spriteBottom = platformTop + spriteHeight;
+            sprite.style.bottom = `${spriteBottom}px`;
+            velocityY = 0; // Reset velocity when landing on a platform
+            isOnPlatform = true;
+            return; // Exit loop early if collision found
+        }
+    });
 }
 
 /* // Function to handle collision
@@ -97,10 +94,48 @@ function handleCollision(spriteBoundaries, platformRect) {
     velocityY = 0; // Reset velocity when landing on a platform
 } */
 
+let isJumping = false;
+//check if canJump to manipulate later
+let canJump = false;
+function checkCanJump() {
+    if(!isJumping && velocityY === 0){
+        canJump = true;
+    } else {
+        canJump = false; // Reset canJump if conditions are not met
+    }
+}
+
+//implementing checkCanJump
+checkCanJump();
+// Handle key presses
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+        spriteLeft -= 10; // Move left
+    } else if (e.key === 'ArrowRight') {
+        spriteLeft += 10; // Move right
+    } else if (e.key === ' ') {
+        e.preventDefault(); // Prevent default scrolling behavior immediatel
+        checkCanJump;
+        if (!isJumping && canJump){ // Allow jump if nearly on the ground
+            velocityY = -jumpVelocity; // Note: Negative for upward movement
+            isJumping = true; // Set jump flag
+/*             setTimeout(() => {
+                isJumping = false; // Reset jump flag after a delay
+            }, 10); // Adjust the delay as needed
+            console.log(isJumping); */
+        }
+    }
+});
+document.addEventListener('keyup', (e) => {
+    if (e.key === ' ') {
+        isJumping = false; // Reset flag when space bar is released
+    }
+});
+
 // Function to update sprite position
 function updateSpritePosition() {
 
-    // Apply gravity
+/*     // Apply gravity
     let isOnPlatform = false; // Flag to check if sprite is on a platform
     platforms.forEach(platform => {
         const platformBoundaries = platform.getBoundingClientRect();
@@ -113,12 +148,35 @@ function updateSpritePosition() {
         } else if (!isOnPlatform) { // Apply gravity if not on a platform
             velocityY += gravity;
         }
+    }); */
+
+        // Apply gravity
+    velocityY = 0 + gravity;
+    let isOnPlatform = false; // Flag to check if sprite is on a platform
+    console.log(velocityY);
+
+    platforms.forEach(platform => {
+        const platformBoundaries = platform.getBoundingClientRect();
+        if (isColliding(spriteBoundaries, platformBoundaries)) {
+            isOnPlatform = true; // Set flag if collision detected
+            if(velocityY >= 0){
+            // Adjust sprite position to prevent it from falling through the platform
+            const spriteHeight = spriteBoundaries.height;
+            const platformTop = platformBoundaries.top;
+            sprite.style.bottom = `${platformTop + spriteHeight}px`;
+            velocityY = 0; // Reset velocity when landing on a platform
+            return;
+            }
+        }
     });
 
-/*     if (!isOnPlatform) { // Only apply gravity if not on a platform
-        velocityY += gravity;
-    } */
 
+
+    if (!isOnPlatform) {
+        // Apply gravity if not on a platform
+        velocityY += gravity;
+    }
+    console.log(isJumping);
 
     // Update vertical position
     spriteBottom -= velocityY; // Note: Subtract velocityY to move down
@@ -142,18 +200,8 @@ function updateSpritePosition() {
 
 }
 
-/* // Handle key presses
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
-        spriteLeft -= 10; // Move left
-    } else if (e.key === 'ArrowRight') {
-        spriteLeft += 10; // Move right
-    } else if (e.key === ' ') {
-        if (velocityY === 0) { // Only jump if on the ground
-            velocityY = jumpVelocity;
-        }
-    }
-}); */
+
+
 
 // Update sprite position repeatedly
 setInterval(updateSpritePosition, 16); // Approximately 60 FPS

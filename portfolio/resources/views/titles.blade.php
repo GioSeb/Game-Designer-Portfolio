@@ -17,7 +17,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/platform.js') }}"></script>
     <script src="{{ asset('js/sprite.js')}}"></script>
 </body>
 
