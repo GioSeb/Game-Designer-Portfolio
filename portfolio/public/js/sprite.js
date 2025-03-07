@@ -1,4 +1,4 @@
-/* TO DO clean the code */
+/* TO DO clean the code, make jump WORK */
 // Get the sprite element
 const sprite = document.getElementById('sprite');
 const platforms = document.querySelectorAll('.platform');
@@ -97,6 +97,7 @@ function handleCollision(spriteBoundaries, platformRect) {
 let isJumping = false;
 //check if canJump to manipulate later
 let canJump = false;
+
 function checkCanJump() {
     if(!isJumping && velocityY === 0){
         canJump = true;
@@ -105,8 +106,8 @@ function checkCanJump() {
     }
 }
 
-//implementing checkCanJump
-checkCanJump();
+
+
 // Handle key presses
 document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') {
@@ -115,7 +116,6 @@ document.addEventListener('keydown', (e) => {
         spriteLeft += 10; // Move right
     } else if (e.key === ' ') {
         e.preventDefault(); // Prevent default scrolling behavior immediatel
-        checkCanJump;
         if (!isJumping && canJump){ // Allow jump if nearly on the ground
             velocityY = -jumpVelocity; // Note: Negative for upward movement
             isJumping = true; // Set jump flag
@@ -150,25 +150,38 @@ function updateSpritePosition() {
         }
     }); */
 
-        // Apply gravity
+    // Apply gravity
     velocityY = 0 + gravity;
     let isOnPlatform = false; // Flag to check if sprite is on a platform
-    console.log(velocityY);
+
+    let canJumpTimeoutId = null; // Store timeout ID
+    //implementing checkCanJump
+    checkCanJump();
+    console.log(canJump);
 
     platforms.forEach(platform => {
         const platformBoundaries = platform.getBoundingClientRect();
         if (isColliding(spriteBoundaries, platformBoundaries)) {
             isOnPlatform = true; // Set flag if collision detected
+            //console.log(isOnPlatform);
+/*             if (document.addEventListener('keypress', (e) => {
+                isOnPlatform = false;
+            })) */
+            //console.log(isOnPlatform);
+
             if(velocityY >= 0){
-            // Adjust sprite position to prevent it from falling through the platform
-            const spriteHeight = spriteBoundaries.height;
-            const platformTop = platformBoundaries.top;
-            sprite.style.bottom = `${platformTop + spriteHeight}px`;
-            velocityY = 0; // Reset velocity when landing on a platform
-            return;
+                // Adjust sprite position to prevent it from falling through the platform
+                const spriteHeight = spriteBoundaries.height;
+                const platformTop = platformBoundaries.top;
+                sprite.style.bottom = `${platformTop + spriteHeight}px`;
+                velocityY = 0; // Reset velocity when landing on a platform
+                return;
             }
+            //console.log(velocityY);
+            canJump = true;
         }
     });
+    //console.log(isOnPlatform);
 
 
 
@@ -176,7 +189,7 @@ function updateSpritePosition() {
         // Apply gravity if not on a platform
         velocityY += gravity;
     }
-    console.log(isJumping);
+    //console.log(isJumping);
 
     // Update vertical position
     spriteBottom -= velocityY; // Note: Subtract velocityY to move down
