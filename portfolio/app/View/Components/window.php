@@ -1,25 +1,21 @@
 <?php
-
 namespace App\View\Components;
 
-use Closure;
-use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use App\Models\Project;
 
-class window extends Component
+class Window extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
+    public Project $project;
+    public int $towerCount;
+
+    public function __construct(Project $project, int $towerCount)
     {
-        //
+        $this->project = $project;
+        $this->towerCount = $towerCount;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
-    public function render(): View|Closure|string
+    public function render()
     {
         return view('components.window');
     }

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('img1', 45);
             $table->string('img2', 45);
             $table->string('img3', 45);
-            $table->string('video', 45);
+            $table->string('video', 45)->nullable();
         });
     }
 

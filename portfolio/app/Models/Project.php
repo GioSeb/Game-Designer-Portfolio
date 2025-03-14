@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Project extends Model
 {
@@ -28,4 +29,18 @@ class Project extends Model
     {
         return self::find($id); // Fetches a project by its primary key
     }
+
+/*     public function store(Request $request)
+        {
+            $path = $request->file('tool1')->store('public/img/candy'); // Save file in storage/app/public/img/candy
+
+            $project = new Project();
+            $project->projectName = $request->input('projectName');
+            $project->projectDescription = $request->input('projectDescription');
+            $project->tool1 = str_replace('public/', '', $path); // Remove "public/" for consistency with asset() helper
+            $project->save();
+
+            return redirect()->back()->with('success', 'Project saved successfully!');
+        } */
+
 }

@@ -28,4 +28,10 @@ class Window extends Component
     {
         return view('components.window');
     }
+
+/*     public function index()
+    {
+    $projects = Project::all();
+    return view('your-view', compact('projects'));
+    }    */
 }

@@ -9,9 +9,10 @@
 
   <div class="flex flex-col items-center justify-end h-auto mx-auto">
     <div class="flex flex-col items-center justify-center h-screen">
-        @foreach(App\Models\Project::all() as $project)
-            <x-window :project="$project" />
-        @endforeach
+        @php
+            $projects = App\Models\Project::all();
+        @endphp
+    <x-window :projects="$projects" :tower-count="$projects->count()" />
       <img src="{{ asset('/img/tower1.png')}}" alt="tower1" style="height: 7.313rem; width: 28.938rem;">
     </div>
   </div>
